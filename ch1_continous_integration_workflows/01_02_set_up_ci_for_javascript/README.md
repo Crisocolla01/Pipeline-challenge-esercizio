@@ -24,7 +24,7 @@ In this lesson, you will:
 - [actions/setup-node on GitHub Marketplace](https://github.com/marketplace/actions/setup-node-js-environment)
 - [actions/checkout on GitHub Marketplace](https://github.com/marketplace/actions/checkout)
 - [Documentation for the Node.js project used for this lesson](./JS_PROJECT_DETAILS.md)
-- TODO: Add link to completed workflow file (version used in recording or similar)
+- [The updated workflow for this lesson](./js-ci-workflow.yml)
 
 ## Lab: Create and Update a Node.js CI Workflow
 
