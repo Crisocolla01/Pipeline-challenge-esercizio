@@ -20,7 +20,7 @@ To do this, you’ll use the **JUnit Report** action from the GitHub Actions Mar
 - [Documentation for the Python project used for this lesson](./PY_PROJECT_DETAILS.md)
 - [The updated workflow for this lesson](./py-ci-workflow.yml)
 
-## Lab: Publish Python Test Results in GitHub Actions
+## Lab: Publish Test Results in GitHub Actions
 
 In this lab, you’ll start with a GitHub starter workflow for a Python project and improve it by publishing test results directly to the workflow summary using JUnit reports.
 
