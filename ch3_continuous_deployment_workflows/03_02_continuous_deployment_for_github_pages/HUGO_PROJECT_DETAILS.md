@@ -18,6 +18,18 @@ The site uses a modern, responsive design with a clean UI featuring gradient acc
 
 ## Project Structure
 
+Hugo follows a convention-based directory structure that organizes content, templates, and static assets. The core directories include:
+
+| Directory/File | Description |
+| -------------- | ----------- |
+| `config.toml` | The main configuration file that defines site settings, theme configuration, and build parameters |
+| `content/` | Contains all markdown content files organized in a hierarchical structure that mirrors the site's URL structure |
+| `layouts/` | Houses HTML templates that define how content is rendered, with `_default/` containing base templates |
+| `static/` | Stores static assets like CSS, JavaScript, images, and other files that are copied directly to the output |
+| `public/` | The generated static site output directory (created during build, typically excluded from version control) |
+
+The following directory tree shows the structure of this Hugo project:
+
 ```bash
 HUGO/
 ├── config.toml          # Hugo configuration

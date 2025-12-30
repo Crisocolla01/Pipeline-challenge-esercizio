@@ -27,13 +27,14 @@ The following matrix outlines how these two types of visibility interact across 
 ## References
 
 - [Creating a GitHub Pages site](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)
+- [Hugo Project Details](./HUGO_PROJECT_DETAILS.md)
 
 ## Lab: Deploy a Hugo Static Site to GitHub Pages
 
 In this lab, you’ll deploy a **Hugo-based static website** to **GitHub Pages** using a GitHub-provided Actions workflow. By the end, your site will be live at a public `github.io` URL.
 
 > [!IMPORTANT]
-> **Important:** If you’re using a **free GitHub account**, the repository **must be public** to deploy a GitHub Pages site.
+> If you’re using a **free GitHub account**, the repository **must be public** to deploy a GitHub Pages site.
 
 ### Prerequisites
 
@@ -58,7 +59,7 @@ Before you begin, make sure you have the exercise files for this lesson download
 5. Verify the directory structure matches the project layout exactly.
 
 > [!IMPORTANT]
-> Hugo requires content to be placed in specific directories. An incorrect structure will prevent the site from building correctly.
+> Hugo requires content to be placed in specific directories. An incorrect structure will prevent the site from building correctly. See [Hugo Project Details](./HUGO_PROJECT_DETAILS.md#project-structure) for more information on the project structure.
 
 #### Step 3: Update the Hugo Configuration in `config.toml`
 
