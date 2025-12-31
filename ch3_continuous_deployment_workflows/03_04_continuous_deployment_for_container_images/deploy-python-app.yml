@@ -24,14 +24,14 @@ jobs:
   # ------------------------------------------------------------
   # Delivery: build lambda.zip and publish as an artifact
   # ------------------------------------------------------------
-  Build:
+  Package:
     needs: Integrate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.0
 
-      - name: Set up Python environment with caching enabled for pip dependencies
-      - uses: actions/setup-python@v4
+      - name: Set up Python environment
+        uses: actions/setup-python@v4
         with:
           python-version: "3.11"
           cache: "pip"
@@ -63,7 +63,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.0
 
-      - name: Set up Python environment with caching enabled for pip dependencies
+      - name: Set up Python environment
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
