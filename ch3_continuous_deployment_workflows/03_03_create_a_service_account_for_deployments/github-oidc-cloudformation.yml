@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: >
-  One-time bootstrap stack that creates the GitHub Actions OIDC provider in this AWS account.
+  This stack creates a GitHub Actions OIDC provider for this AWS account.
 
 Resources:
   GitHubOidcProvider:
