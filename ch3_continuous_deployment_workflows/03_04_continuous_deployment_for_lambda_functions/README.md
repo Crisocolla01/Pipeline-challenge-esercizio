@@ -1,4 +1,4 @@
-# 03_04 Continuous Deployment for Container Images
+# 03_04 Continuous Deployment for Lambda Functions
 
 <!-- FooterStart -->
 ---
