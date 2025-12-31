@@ -1,16 +1,17 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: >
+
+Description: |
   This stack creates a GitHub Actions OIDC provider for this AWS account.
 
 Resources:
   GitHubOidcProvider:
     Type: AWS::IAM::OIDCProvider
     Properties:
-      Url: "https://token.actions.githubusercontent.com"
+      Url: https://token.actions.githubusercontent.com
       ClientIdList:
-        - "sts.amazonaws.com"
+        - sts.amazonaws.com
       ThumbprintList:
-        - "6938fd4d98bab03faadb97b34396831e3780aea1"
+        - 6938fd4d98bab03faadb97b34396831e3780aea1
 
 Outputs:
   GitHubOidcProviderArn:
