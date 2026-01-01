@@ -57,6 +57,9 @@ reconfigure:
 apply approve:
 	terraform apply -auto-approve
 
+list:
+	terraform state list
+
 update:
 	terraform get -update
 
