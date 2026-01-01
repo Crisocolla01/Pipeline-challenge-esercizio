@@ -20,15 +20,15 @@ flowchart LR
 
 ## Delivery
 
-* Adds a delivery job to the pipeline
-* Packages the application into a ZIP archive
-* Publishes the ZIP as a workflow artifact
+- Adds a delivery job to the pipeline
+- Packages the application into a ZIP archive
+- Publishes the ZIP as a workflow artifact
 
 ## Deployment
 
-* Adds a deployment job that consumes the artifact
-* Deploys the application to AWS Lambda
-* Build and deploy steps remain clearly separated
+- Adds a deployment job that consumes the artifact
+- Deploys the application to AWS Lambda
+- Build and deploy steps remain clearly separated
 
 ## Environments
 
@@ -49,16 +49,16 @@ You’ll reuse an existing integration workflow, package the application as an a
 
 Before starting this lab, you should have:
 
-* Completed the previous lesson and have the **exercise files**
-* An **AWS account** with a CloudFormation stack already deployed
-* A **GitHub repository** where you can configure variables and workflows
+- Completed the previous lesson and have the **exercise files**
+- An **AWS account** with a CloudFormation stack already deployed
+- A **GitHub repository** where you can configure variables and workflows
 
 ### Step 1: Verify Lambda Environments
 
 Using the resources created earlier in the course, confirm that two Lambda environments exist:
 
-* **Staging Lambda function**
-* **Production Lambda function**
+- **Staging Lambda function**
+- **Production Lambda function**
 
 At this point, both functions are placeholders and do not yet contain the application code. These functions will be updated by the deployment workflow later in the lab.
 
@@ -98,13 +98,13 @@ Open the integration workflow file.  This workflow is responsible for linting an
 
 Note the characteristics:
 
-* Includes a `workflow_call` trigger for reuse
-* Includes a `push` trigger that **ignores the `main` branch**
+- Includes a `workflow_call` trigger for reuse
+- Includes a `push` trigger that **ignores the `main` branch**
 
 Why this matters:
 
-* Prevents the integration workflow from running twice on pushes to `main`
-* Avoids duplicate runs when called by the deployment workflow
+- Prevents the integration workflow from running twice on pushes to `main`
+- Avoids duplicate runs when called by the deployment workflow
 
 ### Step 5: Review the Deployment Workflow
 
@@ -120,9 +120,9 @@ Open the deployment workflow file and note the key sections:
 
 Both deployment jobs:
 
-* Configure AWS credentials using the service account
-* Download the artifact
-* Deploy the application to AWS Lambda
+- Configure AWS credentials using the service account
+- Download the artifact
+- Deploy the application to AWS Lambda
 
 ### Step 6: Run the Deployment Workflow
 
@@ -132,9 +132,9 @@ Both deployment jobs:
 
 Observe the workflow as it:
 
-* Runs integration
-* Packages the application
-* Deploys automatically to **Staging**
+- Runs integration
+- Packages the application
+- Deploys automatically to **Staging**
 
 ### Step 7: Verify the Staging Deployment
 
@@ -160,17 +160,17 @@ Wait for the production job to complete.
 
 Once the workflow finishes:
 
-* Verify that the production Lambda function has been updated successfully
-* Confirm the application is running as expected
+- Verify that the production Lambda function has been updated successfully
+- Confirm the application is running as expected
 
 ## Lab Complete
 
 After completing the steps for this lab, you should have in place:
 
-* Continuous deployment to **Staging**
-* A protected deployment to **Production**
-* Artifact-based delivery using GitHub Actions
-* Environment-level approval gates
+- Continuous deployment to **Staging**
+- A protected deployment to **Production**
+- Artifact-based delivery using GitHub Actions
+- Environment-level approval gates
 
 > [!TIP]
 > If you’re following along, update the code and push changes to your repository to see the continuous deployment behavior in action.  Maybe even push some bad code to see how the workflow responds to failures.
