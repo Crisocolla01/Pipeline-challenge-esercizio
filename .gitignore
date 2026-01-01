@@ -403,4 +403,5 @@ __marimo__/
 hs_err_pid*
 replay_pid*
 *.bak
-
+.terraform
+.terraform.lock.hcl

@@ -79,7 +79,7 @@ Confirm your repository so workflows can authenticate with **Amazon Web Services
 
 5. Confirm that **Repository variables** are in place for:
 
-   - `AWS_DEFAULT_REGION`
+   - `AWS_REGION`
    - `AWS_ROLE_ARN`
 
 These values will be referenced by GitHub Actions during deployment.

@@ -16,11 +16,11 @@ jobs:
     name: Check Configuration
     runs-on: ubuntu-latest
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      # Use a role for OIDC authentication vs access keys
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Checkout
@@ -33,7 +33,11 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ vars.TERRAFORM_STATE_BUCKET }}" \
+            -backend-config="key=${{ vars.GITHUB_REPOSITORY }}" \
+            -backend-config="region=${{ vars.AWS_REGION }}"
 
       - name: Terraform Validate
         id: validate
@@ -45,17 +49,18 @@ jobs:
           else
             echo "## :white_check_mark: Success! The configuration is valid." >> $GITHUB_STEP_SUMMARY
           fi
+
   plan:
     needs: [check]
     name: Terraform Plan
     runs-on: ubuntu-latest
 
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      # Use a role for OIDC authentication vs access keys
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Checkout
@@ -68,7 +73,11 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ vars.TERRAFORM_STATE_BUCKET }}" \
+            -backend-config="key=${{ vars.GITHUB_REPOSITORY }}" \
+            -backend-config="region=${{ vars.AWS_REGION }}"
 
       - name: Terraform Plan
         continue-on-error: true
@@ -116,11 +125,11 @@ jobs:
     concurrency: Production
 
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      # Use a role for OIDC authentication vs access keys
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Checkout
@@ -133,7 +142,11 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ vars.TERRAFORM_STATE_BUCKET }}" \
+            -backend-config="key=${{ vars.GITHUB_REPOSITORY }}" \
+            -backend-config="region=${{ vars.AWS_REGION }}"
 
       - name: Terraform Apply
         id: apply

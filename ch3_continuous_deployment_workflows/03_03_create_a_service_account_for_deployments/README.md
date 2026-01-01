@@ -153,7 +153,7 @@ Some variables are shared across all environments and should be added at the rep
 3. Select **New repository variable**.
 4. Add the following variable:
 
-   - **Name:** `AWS_DEFAULT_REGION`
+   - **Name:** `AWS_REGION`
    - **Value:** The AWS region where your CloudFormation stack was deployed
 
 5. Select **Add variable**.

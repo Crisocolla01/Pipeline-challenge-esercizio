@@ -73,12 +73,12 @@ jobs:
       - name: Install the project requirements
         run: make requirements
 
-      # OIDC (no long-lived access keys)
+      # Use a role for OIDC authentication vs access keys
       - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
-          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Retrieve lambda.zip
         uses: actions/download-artifact@v4
@@ -123,7 +123,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
-          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Retrieve lambda.zip
         uses: actions/download-artifact@v4

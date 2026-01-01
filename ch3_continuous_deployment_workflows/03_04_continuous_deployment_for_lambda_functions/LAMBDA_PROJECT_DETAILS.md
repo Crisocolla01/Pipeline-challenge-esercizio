@@ -375,7 +375,7 @@ The project includes two GitHub Actions workflows:
 **Required GitHub Variables:**
 
 - `AWS_ROLE_ARN`: AWS IAM role ARN for OIDC authentication
-- `AWS_DEFAULT_REGION`: AWS region for deployment
+- `AWS_REGION`: AWS region for deployment
 - `FUNCTION_NAME`: Name of the Lambda function
 - `URL`: API Gateway URL or Lambda function URL for testing
 
