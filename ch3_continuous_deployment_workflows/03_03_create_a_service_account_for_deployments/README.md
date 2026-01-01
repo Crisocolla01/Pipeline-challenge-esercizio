@@ -77,41 +77,7 @@ You’ll use these output values in the next section, so keep this page open.
 
 ### Part 2: Configure GitHub Environments and Variables
 
-#### Create the Production Environment
-
-1. Open your GitHub repository in a new browser tab.
-2. Select **Settings**.
-3. Select **Environments**.
-4. Select **New environment**.
-5. Name the environment:
-
-   ```bash
-   Production
-   ```
-
-   > ⚠️ Name the environment **Production** with a capital **P**
-   > If deployments fail later, check this setting.
-
-6. Select **Configure environment**.
-7. Scroll to **Environment variables** and select **Add environment variable**.
-8. Add the following variable:
-
-   - **Name:** `FUNCTION_NAME`
-   - **Value:** Copy the value from the CloudFormation output
-     `ProductionFunctionName`
-
-9. Select **Add variable**.
-10. Add another environment variable:
-
-    - **Name:** `URL`
-    - **Value:** Copy the link address from the CloudFormation output
-      `ProductionURL`
-
-11. Select **Add variable**.
-
-The Production environment is now configured.
-
-#### Create the Staging Environment
+#### 2.1 Create the Staging Environment
 
 1. Return to the **Environments** page.
 2. Select **New environment**.
@@ -140,6 +106,41 @@ The Production environment is now configured.
      `StagingURL`
 
 9. Select **Add variable**.
+
+#### 2.2 Create the Production Environment
+
+1. Open your GitHub repository in a new browser tab.
+2. Select **Settings**.
+3. Select **Environments**.
+4. Select **New environment**.
+5. Name the environment:
+
+   ```bash
+   Production
+   ```
+
+   > ⚠️ Name the environment **Production** with a capital **P**
+   > If deployments fail later, check this setting.
+
+6. Select **Configure environment**.
+7. Add the **Deployment protection rule**. Check the box next to **Required reviewers**
+8. Search for and select your GitHub username as a reviewer.
+9. Select **Save protection rules**
+10. Scroll to **Environment variables** and select **Add environment variable**.
+11. Add the following variable:
+
+     - **Name:** `FUNCTION_NAME`
+     - **Value:** Copy the value from the CloudFormation output
+     `ProductionFunctionName`
+
+12. Select **Add variable**.
+13. Add another environment variable:
+
+    - **Name:** `URL`
+    - **Value:** Copy the link address from the CloudFormation output
+      `ProductionURL`
+
+14. Select **Add variable**.
 
 Both environments are now configured with environment-specific values.
 

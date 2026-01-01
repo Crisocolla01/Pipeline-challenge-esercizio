@@ -20,7 +20,7 @@ jobs:
   # ------------------------------------------------------------
   Integrate:
     name: Integrate
-    uses: ./.github/workflows/integrate-python-app.yml
+    uses: ./.github/workflows/1-integrate-python-app.yml
 
   # ------------------------------------------------------------
   # Delivery: build lambda.zip and publish as an artifact
