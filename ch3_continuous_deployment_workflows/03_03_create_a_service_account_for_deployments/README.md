@@ -21,6 +21,7 @@ AWS offers a free tier that allows you to deploy applications at no cost for a l
 ## References
 
 - [Free Cloud Computing Services - AWS Free Tier](https://aws.amazon.com/free/)
+- [OpenID Connect (OIDC)](https://docs.github.com/en/actions/concepts/security/openid-connect)
 
 ## Lab: Provision a Service Account and Deployment Targets; Configure GitHub Actions for AWS Deployments
 
@@ -33,7 +34,7 @@ In this lab, you will:
 
 2. Configure GitHub repository and environment variables using the CloudFormation outputs
 
-These steps prepare your repository so GitHub Actions can authenticate with AWS using OIDC during the deployment.
+These steps prepare your repository so GitHub Actions can [authenticate with AWS using OIDC](https://docs.github.com/en/actions/concepts/security/openid-connect) during the deployment.
 
 ### Part 1: Deploy the CloudFormation Stack
 

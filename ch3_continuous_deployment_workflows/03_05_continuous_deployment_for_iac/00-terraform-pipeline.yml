@@ -10,13 +10,14 @@ permissions:
   contents: read
   issues: write
   pull-requests: write
+  id-token: write
 
 jobs:
   check:
     name: Check Configuration
     runs-on: ubuntu-latest
     steps:
-      # Use a role for OIDC authentication vs access keys
+      # Use a role for OIDC authentication
       - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -29,14 +30,14 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.6
+          terraform_version: 1.14.3
 
       - name: Terraform Init
         id: init
         run: |
           terraform init \
             -backend-config="bucket=${{ vars.TERRAFORM_STATE_BUCKET }}" \
-            -backend-config="key=${{ vars.GITHUB_REPOSITORY }}" \
+            -backend-config="key=${{ github.repository }}" \
             -backend-config="region=${{ vars.AWS_REGION }}"
 
       - name: Terraform Validate
@@ -56,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Use a role for OIDC authentication vs access keys
+      # Use a role for OIDC authentication
       - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -69,14 +70,14 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.6
+          terraform_version: 1.14.3
 
       - name: Terraform Init
         id: init
         run: |
           terraform init \
             -backend-config="bucket=${{ vars.TERRAFORM_STATE_BUCKET }}" \
-            -backend-config="key=${{ vars.GITHUB_REPOSITORY }}" \
+            -backend-config="key=${{ github.repository }}" \
             -backend-config="region=${{ vars.AWS_REGION }}"
 
       - name: Terraform Plan
@@ -125,7 +126,7 @@ jobs:
     concurrency: Production
 
     steps:
-      # Use a role for OIDC authentication vs access keys
+      # Use a role for OIDC authentication
       - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -138,14 +139,14 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.6
+          terraform_version: 1.14.3
 
       - name: Terraform Init
         id: init
         run: |
           terraform init \
             -backend-config="bucket=${{ vars.TERRAFORM_STATE_BUCKET }}" \
-            -backend-config="key=${{ vars.GITHUB_REPOSITORY }}" \
+            -backend-config="key=${{ github.repository }}" \
             -backend-config="region=${{ vars.AWS_REGION }}"
 
       - name: Terraform Apply

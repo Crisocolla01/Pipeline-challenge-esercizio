@@ -5,6 +5,9 @@ on:
 
 permissions:
   contents: read
+  issues: write
+  pull-requests: write
+  id-token: write
 
 jobs:
   plan:
@@ -12,11 +15,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      # Use a role for OIDC authentication
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Checkout
@@ -25,11 +28,15 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.6
-          
+          terraform_version: 1.14.3
+
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ vars.TERRAFORM_STATE_BUCKET }}" \
+            -backend-config="key=${{ github.repository }}" \
+            -backend-config="region=${{ vars.AWS_REGION }}"
 
       - name: Terraform Plan
         continue-on-error: true
@@ -46,19 +53,27 @@ jobs:
               print "Either you have not created any objects yet or the existing objects were already deleted outside of Terraform."
               exit
             }' plan.txt
-          
+
             awk '/Terraform will perform the following actions:/ {
               print "## Terraform will perform the following actions:"
               print "|Action|Resource|"
               print "|------|--------|"
               exit
             }' plan.txt
-          
+
             awk '/Terraform used the selected/{ next } /will be/ || /must be/ {print "|" $5 "|" $2 "|"; next} /Plan:/{ print "## " $0; next }' plan.txt \
               | sed -e 's/created/:white_check_mark: create/' -e 's/destroyed/:bangbang: destroy/' -e 's/replaced/:recycle: replace/'
           } > plan.md
           cat plan.md >> $GITHUB_STEP_SUMMARY
 
+      - name: Update PR comments
+        if: github.event_name == 'pull_request'
+        id: comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.number }}
+          body-path: plan.md
   apply:
     needs: [plan]
     if: github.ref == 'refs/heads/main'
@@ -68,11 +83,11 @@ jobs:
     concurrency: Production
 
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      # Use a role for OIDC authentication
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Checkout
@@ -81,11 +96,15 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.6
+          terraform_version: 1.14.3
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ vars.TERRAFORM_STATE_BUCKET }}" \
+            -backend-config="key=${{ github.repository }}" \
+            -backend-config="region=${{ vars.AWS_REGION }}"
 
       - name: Terraform Apply
         id: apply
@@ -97,5 +116,5 @@ jobs:
           {
             awk '/::debug::stdout:/{ next } /Apply complete!/ { print "## " $0; exit }' apply.txt
           } > apply.md
-          
+
           cat apply.md >> $GITHUB_STEP_SUMMARY
