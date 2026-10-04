@@ -23,4 +23,11 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        ls -R
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      working-directory: ch1_continous_integration_workflows/01_05_challenge_ci_workflow
+
+    - name: Run Tests
+      run: |
+        python manage.py test
+      working-directory: ch1_continous_integration_workflows/01_05_challenge_ci_workflow
